@@ -20,7 +20,7 @@ def format(data):
     for place in data:
         for week_day in place["populartimes"]:
             for i in range(0, 8):
-                geo_data = { "type": "Feature", "properties": { "id": place["id"], "mag": week_day["data"][i], "time": i}, "geometry": { "type": "Point", "coordinates": [place["coordinates"]["lat"], place["coordinates"]["lng"], 0.0 ] } }
+                geo_data = { "type": "Feature", "properties": { "id": place["name"], "mag": week_day["data"][i], "time": i}, "geometry": { "type": "Point", "coordinates": [place["coordinates"]["lat"], place["coordinates"]["lng"], 0.0 ] } }
                 geojson["features"].append(geo_data)
     return geojson
 
