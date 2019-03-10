@@ -57,7 +57,7 @@
 
     <div class='map-overlay top'>
         <div class='map-overlay-inner'>
-            <h2>Significant earthquakes in 2015</h2>
+            <h2>Surges near you</h2>
             <label id='month'></label>
             <input id='slider' type='range' min='0' max='7' step='1' value='0' />
         </div>
@@ -79,46 +79,22 @@
             zoom: 0.5
         });
 
-        // var months = [
-        // 'January',
-        // 'February',
-        // 'March',
-        // 'April',
-        // 'May',
-        // 'June',
-        // 'July',
-        // 'August',
-        // 'September',
-        // 'October',
-        // 'November',
-        // 'December'
-        // ];
-
         function filterBy(time) {
 
             var filters = ['==', 'time', time];
-            map.setFilter('earthquake-circles', filters);
-            map.setFilter('earthquake-labels', filters);
+            map.setFilter('surge-circles', filters);
+            map.setFilter('surge-labels', filters);
+
+            console.log(data);
 
             // Set the label to the month
             document.getElementById('month').textContent = time;
         }
 
         map.on('load', function() {
-
-            // Data courtesy of http://earthquake.usgs.gov/
-            // Query for significant earthquakes in 2015 URL request looked like this:
-            // http://earthquake.usgs.gov/fdsnws/event/1/query
-            //    ?format=geojson
-            //    &starttime=2015-01-01
-            //    &endtime=2015-12-31
-            //    &minmagnitude=6'
-            //
-            // Here we're using d3 to help us make the ajax request but you can use
-            // Any request method (library or otherwise) you wish.
             render(0);
             document.getElementById('slider').addEventListener('input', function(e) {
-                var time = parseInt(e.target.value, 10);
+                var time = parseInt(e.target.value, 7);
                 filterBy(time);
             });
 
@@ -127,22 +103,15 @@
             d3.json('https://raw.githubusercontent.com/davinan/upsurgedata/master/data.geojson', function(err, data) {
                 if (err) throw err;
 
-                // Create a month property value based on time
-                // used to filter against.
-                // data.features = data.features.map(function(d) {
-                // d.properties.time ;
-                // return d;
-                // });
-
-                map.addSource('earthquakes', {
+                map.addSource('surge', {
                     'type': 'geojson',
                     data: data
                 });
 
                 map.addLayer({
-                    'id': 'earthquake-circles',
+                    'id': 'surge-circles',
                     'type': 'circle',
-                    'source': 'earthquakes',
+                    'source': 'surge',
                     'paint': {
                         'circle-color': [
                         'interpolate',
@@ -163,9 +132,9 @@
                 });
 
                 map.addLayer({
-                    'id': 'earthquake-labels',
+                    'id': 'surge-labels',
                     'type': 'symbol',
-                    'source': 'earthquakes',
+                    'source': 'surge',
                     'layout': {
                         'text-field': ['concat', ['to-string', ['get', 'mag']], 'm'],
                         'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
