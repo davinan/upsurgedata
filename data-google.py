@@ -9,7 +9,7 @@ def load_data(file_name, from_file):
     return geojson
 
 def save_data(data):
-    file_name = "data.geojson"
+    file_name = "data-google.json"
     with open(file_name, 'w') as outfile:
         json.dump(data, outfile)
 
@@ -20,14 +20,12 @@ def format(data):
     for place in data:
         for week_day in place["populartimes"]:
             for i in range(0, 8):
-                geo_data = {"type": "Feature", "time": i,"mag": week_day["data"][i], "properties": {"id": place["name"]}, "geometry": { "type": "Point", "coordinates": [place["coordinates"]["lng"], place["coordinates"]["lat"], 0.0 ] } }
-                geojson["features"].append(geo_data)
-                for j in range(0, week_day["data"][i]):
-                    geo_data = {"type": "Feature", "time": i, "properties": { "id": place["name"], "mag": week_day["data"][i]}, "geometry": { "type": "Point", "coordinates": [place["coordinates"]["lng"], place["coordinates"]["lat"], 0.0 ] } }
+                if (week_day["data"][i] > 0):
+                    geo_data = {"long" : place["coordinates"]["lng"], "lat" : place["coordinates"]["lat"]}
                     geojson["features"].append(geo_data)
     return geojson
 
-data = load_data("data.geojson", True)
+data = load_data("data-google.json", True)
 
 save_data(data);
 print(data)
