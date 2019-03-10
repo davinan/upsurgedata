@@ -13,7 +13,6 @@
 </head>
 <body>
 
-
     <div id='map'></div>
 
     <script>
@@ -76,16 +75,16 @@
                     ["linear"],
                     ["zoom"],
                     0, 2,
-                    9, 20]
-                // ],
-                // // Transition from heatmap to circle layer by zoom level
-                // "heatmap-opacity": [
-                //     "interpolate",
-                //     ["linear"],
-                //     ["zoom"],
-                //     7, 1,
-                //     9, 0
-                // ],
+                    9, 20
+                ],
+                // Transition from heatmap to circle layer by zoom level
+                "heatmap-opacity": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    7, 1,
+                    9, 0
+                ],
             }
         }, 'waterway-label');
 
@@ -140,6 +139,12 @@
             }
         }, 'waterway-label');
     });
+    map.addControl(new mapboxgl.GeolocateControl({
+        positionOptions: {
+            enablehighAccuracy: true
+        },
+        trackUserlocation: true
+    }));
 </script>
 
 </body>

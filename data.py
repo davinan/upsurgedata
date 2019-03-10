@@ -4,7 +4,7 @@ api_key = "AIzaSyDQkNQQGP6HF-WbW0OmUTqbHtOF8TnTBJo"
 place_id = "ChIJp0eq6HsE9YgRtDmGa4gATak" #"55 Ivan Allen Jr Blvd NW, Atlanta, GA 30308"
 # response = populartimes.get_id(api_key, place_id)
 def load_data(file_name, from_file):
-    response = populartimes.get(api_key, ["restaurants", "clubs"], (33.765060, -84.389950), (33.779210, -84.406120))
+    response = populartimes.get(api_key, ["restaurants"], (33.765060, -84.389950), (33.760394, -84.383839))
     geojson = format(response)
     return geojson
 
@@ -20,8 +20,9 @@ def format(data):
     for place in data:
         for week_day in place["populartimes"]:
             for i in range(0, 8):
-                geo_data = {"type": "Feature", "time": i, "properties": { "id": place["name"], "mag": week_day["data"][i]}, "geometry": { "type": "Point", "coordinates": [place["coordinates"]["lng"], place["coordinates"]["lat"], 0.0 ] } }
-                geojson["features"].append(geo_data)
+                for j in range(0, week_day["data"][i]):
+                    geo_data = {"type": "Feature", "time": i, "properties": { "id": place["name"], "mag": week_day["data"][i]}, "geometry": { "type": "Point", "coordinates": [place["coordinates"]["lng"], place["coordinates"]["lat"], 0.0 ] } }
+                    geojson["features"].append(geo_data)
     return geojson
 
 data = load_data("data.geojson", True)
