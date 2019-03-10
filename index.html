@@ -140,18 +140,18 @@
         }, 'waterway-label');
     });
     map.addLayer({
-                    'id': 'surge-labels',
-                    'type': 'symbol',
-                    'source': 'surge',
-                    'layout': {
-                        'text-field': ['concat', ['to-string', ['get', 'mag']], 'm'],
-                        'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-                        'text-size': 12
-                    },
-                    'paint': {
-                        'text-color': 'rgba(0,0,0,0.5)'
-                    }
-                });
+        'id': 'surge-labels',
+        'type': 'symbol',
+        'source': 'surge',
+        'layout': {
+            'text-field': ['concat', ['to-string', ['get', 'mag']], 'm'],
+            'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+            'text-size': 12
+        },
+        'paint': {
+            'text-color': 'rgba(0,0,0,0.5)'
+        }
+    });
     map.addControl(new mapboxgl.GeolocateControl({
         positionOptions: {
             enablehighAccuracy: true
