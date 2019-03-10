@@ -4,7 +4,7 @@ api_key = "AIzaSyDQkNQQGP6HF-WbW0OmUTqbHtOF8TnTBJo"
 place_id = "ChIJp0eq6HsE9YgRtDmGa4gATak" #"55 Ivan Allen Jr Blvd NW, Atlanta, GA 30308"
 # response = populartimes.get_id(api_key, place_id)
 def load_data(file_name, from_file):
-    response = populartimes.get(api_key, ["restaurants"],(33.769960, -84.395080),(33.759930, -84.383950)) #(33.765060, -84.389950), (33.760394, -84.383839))
+    response = populartimes.get(api_key, ["restaurants", "clubs", "university", "farmacy", "museum"],(33.769960, -84.395080),(33.759930, -84.383950)) #(33.765060, -84.389950), (33.760394, -84.383839))
     geojson = format(response)
     return geojson
 
