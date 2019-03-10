@@ -27,15 +27,15 @@
     map.on('load', function() {
         // Add a geojson point source.
         // Heatmap layers also work with a vector tile source.
-        map.addSource('earthquakes', {
+        map.addSource('surge', {
             "type": "geojson",
             "data": "https://raw.githubusercontent.com/davinan/upsurgedata/master/data.geojson"
         });
 
         map.addLayer({
-            "id": "earthquakes-heat",
+            "id": "surge-heat",
             "type": "heatmap",
-            "source": "earthquakes",
+            "source": "surge",
             "maxzoom": 9,
             "paint": {
                 // Increase the heatmap weight based on frequency and property magnitude
@@ -89,9 +89,9 @@
         }, 'waterway-label');
 
         map.addLayer({
-            "id": "earthquakes-point",
+            "id": "surge-point",
             "type": "circle",
-            "source": "earthquakes",
+            "source": "surge",
             "minzoom": 7,
             "paint": {
                 // Size circle radius by earthquake magnitude and zoom level
@@ -139,6 +139,19 @@
             }
         }, 'waterway-label');
     });
+    map.addLayer({
+                    'id': 'surge-labels',
+                    'type': 'symbol',
+                    'source': 'surge',
+                    'layout': {
+                        'text-field': ['concat', ['to-string', ['get', 'mag']], 'm'],
+                        'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+                        'text-size': 12
+                    },
+                    'paint': {
+                        'text-color': 'rgba(0,0,0,0.5)'
+                    }
+                });
     map.addControl(new mapboxgl.GeolocateControl({
         positionOptions: {
             enablehighAccuracy: true
